@@ -37,23 +37,15 @@ public:
 		buffer = new char[bufSize];
 		//Bytes number every line of picture
 		int lineBytes = pFrame->linesize[0];
-
-		memcpy(buffer, pFrame->data[0]+300* lineBytes, lineBytes);
-
-		cout << "modify" << endl;
-		// buffer!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		/*
+		// every frame stored in a buffer
 		for (int y = 0; y < height; y++) {
-			memcpy(&buffer[0 + y*pFrame->linesize[0]], 
-				pFrame->data[0+y*pFrame->linesize[0]], pFrame->linesize[0]);
+			memcpy(buffer + y*lineBytes, 
+				pFrame->data[0]+y*lineBytes, lineBytes);
 		}
-		*/
-
-		cout << pFrame->data[0] << endl;
-
 		//cout << pFrame->data[0] << endl;
 		sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr*)&servAddr, sizeof(servAddr));
-		buffer = {0};
+		//release the buffer
+		buffer = {};
 		//cout << "Message form server: " << buffer << endl;
 		
 		
