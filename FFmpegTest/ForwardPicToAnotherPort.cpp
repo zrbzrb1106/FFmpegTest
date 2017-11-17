@@ -40,7 +40,7 @@ public:
 
 		memcpy(buffer, pFrame->data[0]+300* lineBytes, lineBytes);
 
-		cout << endl;
+		cout << "modify" << endl;
 		// buffer!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		/*
 		for (int y = 0; y < height; y++) {
