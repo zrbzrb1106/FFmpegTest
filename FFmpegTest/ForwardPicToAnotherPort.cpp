@@ -39,6 +39,8 @@ public:
 		int lineBytes = pFrame->linesize[0];
 
 		memcpy(buffer, pFrame->data[0]+300* lineBytes, lineBytes);
+
+		cout << endl;
 		// buffer!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		/*
 		for (int y = 0; y < height; y++) {
