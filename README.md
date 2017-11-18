@@ -6,4 +6,4 @@
 
 # Dependency
 
-### VS2017, FFmpeg oder version
+### VS2017, FFmpeg older version
