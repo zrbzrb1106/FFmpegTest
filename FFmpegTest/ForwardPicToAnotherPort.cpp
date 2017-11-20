@@ -42,7 +42,12 @@ public:
 			memcpy(buffer + y*lineBytes, 
 				pFrame->data[0]+y*lineBytes, lineBytes);
 		}
-		//cout << pFrame->data[0] << endl;
+
+		for (int i = 0; i < bufSize; i++) {
+			cout << *(buffer + i);
+		}
+
+
 		sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr*)&servAddr, sizeof(servAddr));
 		//release the buffer
 		buffer = {};
