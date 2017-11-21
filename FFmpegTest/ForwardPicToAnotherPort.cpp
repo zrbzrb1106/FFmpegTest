@@ -45,11 +45,6 @@ public:
 				(struct sockaddr*)&servAddr, sizeof(servAddr));
 			cout << y << " nd line" << endl;
 		}
-
-		
-		// release the buffer
-		
-		
 		
 	}
 
