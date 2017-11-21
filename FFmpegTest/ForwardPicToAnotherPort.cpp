@@ -16,7 +16,7 @@ public:
 	int addrLen;
 
 	
-
+	// initializing socket
 	void init_Socket(void) {
 		WSAStartup(MAKEWORD(2, 2), &wsaData);
 		
@@ -25,7 +25,7 @@ public:
 
 		servAddr.sin_family = PF_INET;
 		inet_pton(PF_INET, "127.0.0.1", &(servAddr.sin_addr));
-		servAddr.sin_port = htons(1234);
+		servAddr.sin_port = htons(8888);
 
 		addrLen = sizeof(fromAddr);
 	}
@@ -34,19 +34,21 @@ public:
 		int width, int height, int iFrame) {
 
 		char *buffer;
-		buffer = new char[bufSize];
 		//Bytes number every line of picture
 		int lineBytes = pFrame->linesize[0];
-		// every frame stored in a buffer
+		buffer = new char[lineBytes];
+		// send every line
 		for (int y = 0; y < height; y++) {
-			memcpy(buffer + y*lineBytes, 
+			memcpy(buffer, 
 				pFrame->data[0]+y*lineBytes, lineBytes);
+			sendto(sock, buffer, lineBytes, 0, 
+				(struct sockaddr*)&servAddr, sizeof(servAddr));
+			cout << y << "nd line" << endl;
 		}
-		//cout << pFrame->data[0] << endl;
-		sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr*)&servAddr, sizeof(servAddr));
-		//release the buffer
-		buffer = {};
-		//cout << "Message form server: " << buffer << endl;
+
+		
+		// release the buffer
+		
 		
 		
 	}
