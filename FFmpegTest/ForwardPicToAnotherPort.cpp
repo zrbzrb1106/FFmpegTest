@@ -20,7 +20,7 @@ public:
 	void init_Socket(void) {
 		WSAStartup(MAKEWORD(2, 2), &wsaData);
 		
-		sock = socket(PF_INET, SOCK_DGRAM, 0);
+		sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);//
 		memset(&servAddr, 0, sizeof(servAddr));
 
 		servAddr.sin_family = PF_INET;
@@ -28,6 +28,7 @@ public:
 		servAddr.sin_port = htons(8888);
 
 		addrLen = sizeof(fromAddr);
+		connect(sock, (struct sockaddr *) &servAddr, sizeof(servAddr));//
 	}
 	// send frame to another port
 	void sendPicData(AVFrame *pFrame, long int bufSize,
@@ -37,11 +38,12 @@ public:
 		//Bytes number every line of picture
 		int lineBytes = pFrame->linesize[0];
 		buffer = new char[lineBytes];
+
 		// send every line
 		for (int y = 0; y < height; y++) {
 			memcpy(buffer, 
 				pFrame->data[0]+y*lineBytes, lineBytes);
-			
+
 			sendto(sock, buffer, lineBytes, 0, 
 				(struct sockaddr*)&servAddr, sizeof(servAddr));
 			cout << y << " nd line" << endl;
