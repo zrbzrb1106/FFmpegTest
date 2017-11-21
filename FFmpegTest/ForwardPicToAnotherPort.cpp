@@ -29,7 +29,7 @@ public:
 
 		addrLen = sizeof(fromAddr);
 	}
-	
+	// send frame to another port
 	void sendPicData(AVFrame *pFrame, long int bufSize,
 		int width, int height, int iFrame) {
 
@@ -41,6 +41,7 @@ public:
 		for (int y = 0; y < height; y++) {
 			memcpy(buffer, 
 				pFrame->data[0]+y*lineBytes, lineBytes);
+			
 			sendto(sock, buffer, lineBytes, 0, 
 				(struct sockaddr*)&servAddr, sizeof(servAddr));
 			cout << y << " nd line" << endl;
