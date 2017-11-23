@@ -46,7 +46,7 @@ public:
 
 			sendto(sock, buffer, lineBytes, 0, 
 				(struct sockaddr*)&servAddr, sizeof(servAddr));
-			cout << y << " nd line" << endl;
+			//cout << y << " nd line" << endl;
 		}
 		
 	}
