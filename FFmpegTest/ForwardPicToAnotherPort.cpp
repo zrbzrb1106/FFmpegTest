@@ -14,8 +14,8 @@ public:
 	sockaddr_in servAddr;
 	sockaddr fromAddr;
 	int addrLen;
+	char *buffer;
 
-	
 	// initializing socket
 	void init_Socket(void) {
 		WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -29,17 +29,19 @@ public:
 
 		addrLen = sizeof(fromAddr);
 		connect(sock, (struct sockaddr *) &servAddr, sizeof(servAddr));//
+		buffer = new char[2764800];
+		
 	}
 	// send frame to another port
 	void sendPicData(AVFrame *pFrame, long int bufSize,
 		int width, int height, int iFrame) {
 
-		char *buffer;
 		//Bytes number every line of picture
 		int lineBytes = pFrame->linesize[0];
+		// send line by line
+		/* 
 		buffer = new char[lineBytes];
 
-		// send every line
 		for (int y = 0; y < height; y++) {
 			memcpy(buffer, 
 				pFrame->data[0]+y*lineBytes, lineBytes);
@@ -48,6 +50,11 @@ public:
 				(struct sockaddr*)&servAddr, sizeof(servAddr));
 			//cout << y << " nd line" << endl;
 		}
+		*/
+		
+		memcpy(buffer, pFrame->data[0], bufSize);
+		sendto(sock, buffer, bufSize, 0,
+			(struct sockaddr*)&servAddr, sizeof(servAddr));
 		
 	}
 
