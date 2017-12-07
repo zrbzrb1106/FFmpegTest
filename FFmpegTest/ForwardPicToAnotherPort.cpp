@@ -16,11 +16,11 @@ public:
 	int addrLen;
 	char *buffer;
 
-	// initializing socket
+	// initializing socket, using TCP
 	void init_Socket(void) {
 		WSAStartup(MAKEWORD(2, 2), &wsaData);
 		
-		sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);//
+		sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 		memset(&servAddr, 0, sizeof(servAddr));
 
 		servAddr.sin_family = PF_INET;
@@ -35,29 +35,13 @@ public:
 	// send frame to another port
 	void sendPicData(AVFrame *pFrame, long int bufSize,
 		int width, int height, int iFrame) {
-
-		//Bytes number every line of picture
-		int lineBytes = pFrame->linesize[0];
-		// send line by line
-		/* 
-		buffer = new char[lineBytes];
-
-		for (int y = 0; y < height; y++) {
-			memcpy(buffer, 
-				pFrame->data[0]+y*lineBytes, lineBytes);
-
-			sendto(sock, buffer, lineBytes, 0, 
-				(struct sockaddr*)&servAddr, sizeof(servAddr));
-			//cout << y << " nd line" << endl;
-		}
-		*/
 		
 		memcpy(buffer, pFrame->data[0], bufSize);
 		sendto(sock, buffer, bufSize, 0,
 			(struct sockaddr*)&servAddr, sizeof(servAddr));
 		
 	}
-
+	// close socket
 	void end_Socket() {
 		closesocket(sock);
 		WSACleanup();
