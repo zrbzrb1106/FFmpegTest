@@ -14,7 +14,7 @@ public:
 	sockaddr_in servAddr;
 	sockaddr fromAddr;
 	int addrLen;
-	char *buffer;
+	char *buffer = nullptr;
 
 	// initializing socket, using TCP
 	void init_Socket(void) {
