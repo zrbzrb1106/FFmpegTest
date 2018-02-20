@@ -33,10 +33,10 @@ public:
 		
 	}
 	// send frame to another port
-	void sendPicData(AVFrame *pFrame, long int bufSize,
+	void sendPicData(uint8_t *pFrame, long int bufSize,
 		int width, int height, int iFrame) {
 		
-		memcpy(buffer, pFrame->data[0], bufSize);
+		memcpy(buffer, pFrame, bufSize);
 		sendto(sock, buffer, bufSize, 0,
 			(struct sockaddr*)&servAddr, sizeof(servAddr));
 		
